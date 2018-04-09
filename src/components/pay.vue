@@ -40,7 +40,7 @@
 	}
 	.btn{
 		width: 80%;
-		
+
 		padding: 3% 0;
 		text-align: center;
 		background: limegreen;
@@ -58,4 +58,5 @@
 		background: url(../assets/images/detail/ios/beijing@3x.png) no-repeat 0px 0px;
 		background-size: 100% 100%;
 	}
+	
 </style>

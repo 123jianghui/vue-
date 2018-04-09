@@ -11,9 +11,10 @@ import Url from '@/components/url'
 import Detail from '@/components/detail'
 import shoppingCar from '@/components/shoppingCar'
 import Head from '@/components/head'
-import twoList from '@/components/twoList'
-import threeList from '@/components/threeList'
-
+import lingshiList from '@/components/lingshiList'
+import fruitList from '@/components/fruitList'
+import riceList from '@/components/riceList'
+import milkList from '@/components/milkList'
 
 Vue.use(Router)
 
@@ -24,10 +25,26 @@ routes: [
       path: '/list',
       name: 'list',
       component: List,
-      children:[
-      	{path:"/",component:twoList},
-      	{path:"threeList",component:threeList}
-      ]
+    },
+    {
+      path: '/lingshiList',
+      name: 'lingshiList',
+      component: lingshiList,
+    },
+    {
+      path: '/fruitList',
+      name: 'fruitList',
+      component:fruitList,
+    },
+    {
+      path: '/riceList',
+      name: 'riceList',
+      component: riceList,
+    },
+    {
+      path: '/milkList',
+      name: 'milkList',
+      component:milkList,
     },
     {
     	path:'/shopping',

@@ -165,24 +165,32 @@
 				data:{
 					'rows':0,
 					'page':1,
-					"productTypeId":0
+					"productTypeId":""
 				},
 				success:function(data){
 					_this.data = data.data
-
+					console.log(data)
 					
 				}
 			}),
 			//获取购物车的商品数量
-			axios.post(url.shoppingCarUrl)
-				.then(function(data) {
-					console.log(data.data.data)
-					for(var i = 0; i < data.data.data.length; i++) {
-						_this.num = parseFloat(data.data.data[i].quantity) + parseFloat(data.data.data[i + 1].quantity)
-						
+			$.ajax({
+					type: "post",
+					url: url.shoppingCarUrl,
+					async: true,
+					success: function(data) {
+						//					
+						data = eval(data)
+						var num = 0;
+						var total = 0;
+						for(var i = 0; i < data.length; i++) {
+							num += Number(data[i].quantity)
+							total += Number(data[i].quantity) * Number(data[i].price)
+						}
+						$(".position .num").html(num);
+						$(".footer .l span").html(total.toFixed(2))
 					}
-					$(".position .num").html(_this.num)
-				}),
+				});
 				setTimeout(function() {
 			$(".zhez").fadeOut(1000)
 		}, 2000)

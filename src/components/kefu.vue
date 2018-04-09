@@ -11,29 +11,33 @@
 		</div>
 	</div>
 </template>
-
 <script>
 	import url from '../components/url'
-	
+
 	export default {
 		name: 'kefu',
 		data() {
-			return {
-				content:""
-			}
 		},
 		methods:{
 			leavePost:function(){
 				let _this = this;
 				var cont = $("textarea").val()
-				axios.post(url.leaveUrl)
-				.then(function(data) {
-					console.log(data.data)
-					_this.content = cont;
-					console.log(_this.content)
-					$("textarea").val("")
-					alert(data.data.message)
-				})
+				$.ajax({
+					type:"post",
+					url:url.leaveUrl,
+					async:true,
+					data:{
+						"content":cont
+					},
+					success:function(data){
+						$("textarea").val(" ");
+//						console.log(data)
+						data=JSON.parse(data)
+
+						alert(data.message)
+					}
+				});
+
 			}
 		}
 	}

@@ -66,7 +66,7 @@
 		name: 'shoppingCar',
 		data() {
 			return {
-				num: 0,
+			/*	num: 0,*/
 				data: {
 
 				},
@@ -110,54 +110,130 @@
 			reduce: function(index) {
 				var productid = $(".container ul li").eq(index).attr('id');
 				var num = parseInt($(".m input").eq(index).val())
-				if(num>1) {
-					var _this = this;
-					$.ajax({
-						type: "post",
-						data: {
-							"productid": productid
-						},
-						url: url.reduceUrl,
-						async: true,
-						success: function(data) {
-							data = JSON.parse(data)
-							if(data.data == "SUCCESS") {
-								num--;
-								$(".m input").eq(index).val(num)
+//				var _this = this;
+				var inp = $(".check").length;
+				num--;
+				if(num<=0){
+					num =1 ;
+				}
+				var totals = 0;
+				$(".m input").eq(index).val(num)
+				for(let i = 0; i < inp; i++) {
+					//获取所有复选框是否为选中状态
+					flag = $(".l input").eq(i).prop("checked")
+					//console.log(flag)
+					if(flag) {
+						$.ajax({
+							type: "post",
+							data: {
+								"productid": productid
+							},
+							url: url.reduceUrl,
+							async: true,
+							success: function(data) {
+								//data = JSON.parse(data)
+//								data="SUCCESS"
+//								if(data == "SUCCESS") {
+									$(".m input").eq(index).val(num)
+									var totalNum = Number($(".num").eq(i).find(".price").html()) * Number($(".num").eq(i).find("input").val());
+									console.log(totalNum)
+									totals += totalNum;
+									console.log(totals)
+									$(".total_price").html(totals.toFixed(2))
+									
+									total = totals
+									
+//								} else {
+//									console.log("err")
+//								}
 
-							} else {
-								console.log(111)
 							}
+						});
 
-						}
-					});
-
+					}
 				}
 
 			},
 			add: function(index) {
-				var productid = $(".container ul li").eq(index).attr('id')
-				var _this = this
-				$.ajax({
-					type: "post",
-					url: url.addUrl,
-					data: {
-						"productid": productid
-					},
-					success: function(data) {
-						console.log(data)
-						data = JSON.parse(data)
+//				var productid = $(".container ul li").eq(index).attr('id')
+//				var _this = this
+//				$.ajax({
+//					type: "post",
+//					url: url.addUrl,
+//					data: {
+//						"productid": productid
+//					},
+//					success: function(data) {
+//						console.log(data)
+//						data = JSON.parse(data)
+//
+//						if(data.data == "SUCCESS") {
+//							var num = parseInt($(".m input").eq(index).val())
+//							num++;
+//							$(".m input").eq(index).val(num)
+//
+//						} else {
+//							console.log(err)
+//						}
+//					}
+//				})
+//				this.total = 0;
+//				var inp = $(".check").length;
+//
+//				for(let i = 0; i < inp; i++) {
+//					flag = $(".l input").eq(i).prop("checked")
+//
+//					if(flag) {
+//						this.total += $(".num").eq(i).find(".price").html() * $(".num").eq(i).find("input").val();
+//
+//					}
+//				}
+//				this.total += Number($(".num").eq(index).find(".price").html())
+//				$(".total_price").html(this.total.toFixed(2))
+//				total = this.total
 
-						if(data.data == "SUCCESS") {
-							var num = parseInt($(".m input").eq(index).val())
-							num++;
-							$(".m input").eq(index).val(num)
+				var productid = $(".container ul li").eq(index).attr('id');
+				var num = parseInt($(".m input").eq(index).val())
+//				var _this = this;
+				var inp = $(".check").length;
+				num++;
+				var totals = 0;
+				$(".m input").eq(index).val(num)
+				for(let i = 0; i < inp; i++) {
+					//获取所有复选框是否为选中状态
+					flag = $(".l input").eq(i).prop("checked")
+					//console.log(flag)
+					if(flag) {
+						$.ajax({
+							type: "post",
+							data: {
+								"productid": productid
+							},
+							url: url.addUrl,
+							async: true,
+							success: function(data) {
+								data = JSON.parse(data)
+								console.log(data)
+								//console.log(data)
+								if(data.data == "SUCCESS") {
+									$(".m input").eq(index).val(num)
+									var totalNum = Number($(".num").eq(i).find(".price").html()) * Number($(".num").eq(i).find("input").val());
+									console.log(totalNum)
+									totals += totalNum;
+									console.log(totals)
+									$(".total_price").html(totals.toFixed(2))
+									
+									total = totals
+									
+								} else {
+									console.log("err")
+								}
 
-						} else {
-							alert(data.message)
-						}
+							}
+						});
+
 					}
-				})
+				}
 			},
 			cancel: function() {
 				$(".box").css('display', 'none')
@@ -180,7 +256,7 @@
 						this.total += $(".num").eq(i).find(".price").html() * $(".num").eq(i).find("input").val();
 					}
 				}
-				$(".total_price").html(this.total)
+				$(".total_price").html(this.total.toFixed(2))
 				total = this.total
 			},
 			btn_n: function() {
@@ -225,6 +301,7 @@
 							$.ajax({
 								type: "post",
 								url: "http://dc.iq234.com/nomanshop/testController.do?create",
+//								url: "http://127.0.0.1/nomanshop/testController.do?create",
 								data: {
 									"ordersIds": data.data.ordersIds,
 									"ordersAllMoney": data.data.ordersAllMoney
@@ -253,7 +330,7 @@
 												function(res) {
 
 													if(res.err_msg == "get_brand_wcpay_request:ok") {
-														window.location.href = "http://dc.iq234.com/nomanshop/dist/index.html#/shoppingCar";
+														window.location.href = "http://dc.iq234.com/nomanshop/dist/index.html#/history";
 													} // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
 													else {}
 												}
@@ -468,8 +545,8 @@
 	.box {
 		width: 100%;
 		height: 100%;
-		z-index: 99;
-		position: absolute;
+		z-index: 999;
+		position: fixed;
 		top: 0;
 		display: none;
 		background: rgba(0, 0, 0, 0.4);
