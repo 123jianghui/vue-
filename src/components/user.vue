@@ -30,13 +30,25 @@
 			success:function(){
 				var check = $("#inp").prop("checked")
 				if(check==true){
-					window.location.href = '/nomanshop/dist/index.html#/list'
-				}else{
-					console.log(check)
-					console.log($("#inp").prop("checked"))
+					window.location.href = '/dist/index.html#/list'
 				}
 
 			}
+		},
+		mounted:function(){
+			$.ajax({
+				type: "post",
+				url: "http://gxcs.iq234.com/agreementController.do?getAgreementByType&type=register",
+				async: true,
+				dataType:"jsonp",
+				jsonp:"callback",
+				data: { },
+				success: function(data) {
+					console.log(data)
+					data = JSON.parse(data)
+					console.log(data)
+				}
+			});
 		}
 
 	}
@@ -131,6 +143,7 @@
 		background: url(../assets/images/ps/提交按钮@2x.png) no-repeat 0px 0px;
 		margin: 40px auto;
 		padding: 5% 0;
+		color: #fff;
 		background-size: 100% 100%;
 	}
 

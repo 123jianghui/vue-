@@ -5,7 +5,7 @@
 				<div class="top">
 					<div class="img">
 						<!--<img src="../assets/images/detail/android/drawable-hdpi/shangpin.png" />-->
-						<img :src="list.img"/>
+						<img :src="list.img" />
 					</div>
 					<p>{{list.name}}</p>
 					<div class="math">
@@ -31,10 +31,10 @@
 				</div>
 				<div class="position">
 					<router-link tag="div" class="l" to="/shoppingCar">
-						<span style="position: absolute;top: 18%;left: 76%;font-size: 14px;" id="span"></span>
+						<span style="position: absolute;top: 18%;left: 76%;font-size: 14px;" id="span">0</span>
 					</router-link>
 					<div class="r" @click="pay()">
-						<p class="price">￥<span>{{list.price * list.quantity | money}}</span></p>
+						<p class="price">￥<span>{{list.price * list.quantity | format}}</span></p>
 						<p class="yes">立即支付</p>
 					</div>
 				</div>
@@ -52,6 +52,7 @@
 	</div>
 </template>
 
+
 <script>
 	import url from '../components/url'
 
@@ -65,10 +66,11 @@
 				num: 0
 			}
 		},
-		filters:{
-			money:function(value){
-				value = Number(value)
-				return value.toFixed(2)
+		filters: {
+			format: function(value) {
+				var toFixedNum = Number(value).toFixed(3);
+      			var realVal = toFixedNum.substring(0, toFixedNum.toString().length - 1);
+      			return realVal;
 			}
 		},
 		methods: {
@@ -95,7 +97,7 @@
 							var appId;
 							$.ajax({
 								type: "post",
-								url: "http://dc.iq234.com/nomanshop/testController.do?create",
+								url: "http://gxcs.iq234.com/testController.do?create",
 								data: {
 									"ordersIds": data.data.ordersIds,
 									"ordersAllMoney": data.data.ordersAllMoney
@@ -111,7 +113,6 @@
 										sign = succ.data.paySign;
 										$(".hhhh").html(succ.data);
 
-
 										function onBridgeReady() {
 											WeixinJSBridge.invoke(
 												'getBrandWCPayRequest', {
@@ -124,7 +125,7 @@
 												},
 												function(res) {
 													if(res.err_msg == "get_brand_wcpay_request:ok") {
-														window.location.href = "http://dc.iq234.com/nomanshop/dist/index.html#/history";
+														window.location.href = "http://gxcs.iq234.com/dist/index.html#/history";
 													} // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
 													else {}
 												}
@@ -179,12 +180,12 @@
 							let totalNum = $("#span").html()
 							let total = Number($(".position .r .price span").html());
 							let price = Number($(".math .price span").html())
-							console.log(total, price)
+							// console.log(total, price)
 							total -= price;
-							if(total <= 0){
+							if(total <= 0) {
 								total = 0
 							}
-							$(".position .r .price span").html(total)
+							$(".position .r .price span").html(total.toFixed(2))
 							num--;
 							totalNum--;
 							if(num <= -1) {
@@ -218,7 +219,6 @@
 			//点击实现购物车数量的增加
 			add: function(index) {
 				var productid = sessionStorage.getItem("productid")
-				console.log()
 				var _this = this
 				$.ajax({
 					type: "post",
@@ -240,9 +240,9 @@
 							$("#span").html(totalNum)
 							let total = Number($(".position .r .price span").html());
 							let price = Number($(".math .price span").html())
-							console.log(total, price)
+							// console.log(total, price)
 							total += price;
-							$(".position .r .price span").html(total)
+							$(".position .r .price span").html(total.toFixed(2))
 							$.ajax({
 								type: "post",
 								url: url.shoppingCarUrl,
@@ -271,7 +271,7 @@
 		mounted: function() {
 			let _this = this
 			var productid = sessionStorage.getItem("productid")
-//			console.log(productid)
+			//			console.log(productid)
 			$.ajax({
 				type: "post",
 				url: url.detailUrl,
@@ -281,7 +281,7 @@
 				},
 				success: function(data) {
 					_this.data = eval("[" + data + "]");
-					console.log(data)
+					// console.log(data)
 				}
 			});
 			$.ajax({
@@ -294,7 +294,7 @@
 					for(var i = 0; i < data.length; i++) {
 						_this.num += Number(data[i].quantity)
 					}
-					console.log(_this.num)
+					// console.log(_this.num)
 					$("#span").text(_this.num);
 
 				}
@@ -320,7 +320,6 @@
 	#detail {
 		width: 96%;
 		padding: 0 2%;
-
 		background: url(../assets/images/detail/android/drawable-hdpi/dabeijing.png) no-repeat 0px 0px;
 		background-size: 100% 100%;
 	}
@@ -482,5 +481,4 @@
 	.btn_y {
 		color: red;
 	}
-
 </style>

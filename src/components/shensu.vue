@@ -12,7 +12,7 @@
 
 				<p class="addImage" @click="getFile()">添加图片</p>
 				<div class="submit1">
-					<input type="submit" @click="sub()" value="提交" />
+					<input type="submit" @click="sub()" value="提交" style="width: 100%;height: 100%;background: rgba(0,0,0,0);border: 0;color: #fff;"/>
 					<!--<p style="color:#fff;" @click="sub()">提交</p>-->
 				</div>
 				<input type="text" name="orderId" id="orderId" value="" style="display: none;"/>
@@ -109,7 +109,7 @@
 				async:true,
 				success:function(data){
 					_this.data=JSON.parse(data)
-					console.log(_this.data)
+					// console.log(_this.data)
 				}
 			});
 		}

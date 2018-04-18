@@ -34,7 +34,7 @@
 //						console.log(data)
 						data=JSON.parse(data)
 
-						alert(data.message)
+						// console.log(data.message)
 					}
 				});
 

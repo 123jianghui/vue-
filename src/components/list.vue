@@ -71,7 +71,7 @@
     </ul>
     <div class="con">
       <ol>
-        <li v-for="(list , index) in data" :id="list.id">
+        <!-- <li v-for="(list , index) in data" :id="list.id">
           <div class="img" v-on:click="fun(index)">
             <img :src="list.img" />
           </div>
@@ -84,11 +84,26 @@
             <p class="del" @click="del(index)"><img src="../assets/images/ps/减@2x.png" /></p>
             <p class="add" @click="add(index)"><img src="../assets/images/ps/+-@2x.png" /></p>
           </div>
+        </li> -->
+
+        <li v-for="(list , index) in data" :id="list.id">
+          <div class="img" v-on:click="fun(index)">
+            <img :src="list.img" />
+          </div>
+          <router-link class="name" tag="p" :to="{name:'detail'}" @click.native="idBtn(index)">
+            <p class="price" style="display:inline-block;text-align:center;width:30%;">￥<span>{{list.price}}</span></p>
+            <p class="name" style="display:inline-block;text-align:centerl;width:65%">{{list.name}}</p>
+          </router-link>
+
+          <div class="zhez">
+            <p class="del" @click="del(index)"><img src="../assets/images/ps/减@2x.png" /></p>
+            <p class="add" @click="add(index)"><img src="../assets/images/ps/+-@2x.png" /></p>
+          </div>
         </li>
       </ol>
     </div>
     <router-link class="position" tag="div" to="/shoppingCar">
-      <p class="num">5</p>
+      <p class="num">0</p>
     </router-link>
 
   </div>
@@ -196,7 +211,7 @@ export default {
           //						$(".con ol").empty();
 
           _this.data = eval(data)
-          console.log(_this.data)
+          // console.log(_this.data)
 
         }
       });
@@ -216,7 +231,7 @@ export default {
           data = JSON.parse(data)
 
           if (data.data == "SUCCESS") {
-
+            console.log(data)
             let num = $(".position .num").html();
             num--;
             $(".position .num").html(num)
@@ -224,20 +239,18 @@ export default {
             total -= Number(_this.data[index].price);
             total = total.toFixed(2)
             $(".footer .l span").html(total)
-            console.log($(".footer .l span").html(total))
-
+            // console.log($(".footer .l span").html(total))
           } else {
-            console.log(111)
+            console.log(data.message)
           }
-
         }
       });
-
     },
     //点击实现购物车数量的增加
     add: function(index) {
       var productid = $(".con ol li").eq(index).attr('id')
-      var _this = this
+      var _this = this;
+
       $.ajax({
         type: "post",
         url: url.addUrl,
@@ -245,7 +258,7 @@ export default {
           "productid": productid
         },
         success: function(data) {
-          console.log(data)
+          // console.log(data)
           data = JSON.parse(data)
 
           if (data.data == "SUCCESS") {
@@ -255,11 +268,11 @@ export default {
             let total = Number($(".footer .l span").html());
             total += Number(_this.data[index].price);
             total = total.toFixed(2)
-            $(".footer .l span").html(total.toFixed(2))
-            console.log($(".footer .l span").html(total))
+            $(".footer .l span").html(total)
+            // console.log($(".footer .l span").html(total))
 
           } else {
-            alert(data.message)
+            console.log(data.message)
           }
         }
       })
@@ -379,8 +392,8 @@ export default {
           });
         }
         productTypeId = $(".swiper-slide ul li").eq(this.index2).attr('id')
-        console.log(productTypeId)
-        console.log("向左滑动")
+        // console.log(productTypeId)
+        // console.log("向左滑动")
 
         var _this = this;
         $.ajax({
@@ -395,7 +408,7 @@ export default {
             //						$(".con ol").empty();
 
             _this.data = eval(data)
-            console.log(_this.data)
+            // console.log(_this.data)
 
           }
         });
@@ -424,8 +437,8 @@ export default {
           });
         }
         productTypeId = $(".swiper-slide ul li").eq(this.index2).attr('id')
-        console.log(productTypeId)
-        console.log("向右滑动")
+        // console.log(productTypeId)
+        // console.log("向右滑动")
         var _this = this;
         $.ajax({
           type: "post",
@@ -439,7 +452,7 @@ export default {
             //						$(".con ol").empty();
 
             _this.data = eval(data)
-            console.log(_this.data)
+            // console.log(_this.data)
 
           }
         });
@@ -583,7 +596,7 @@ export default {
           //						$(".con ol").empty();
 
           _this.data = eval(data)
-          console.log(_this.data)
+          // console.log(_this.data)
 
         }
       });
@@ -595,7 +608,8 @@ export default {
     //获取商品信息
     $.ajax({
         type: 'post',
-        url: url.indexUrl,
+           url: url.indexUrl,
+//      url:"http://www.sosoapi.com/pass/mock/9159//productController.do?productListGetDate",
         data: {
           'rows': 0,
           "productTypeId": ""
@@ -628,7 +642,8 @@ export default {
       type: "post",
       url: url.addListUrl,
       async: true,
-      success: function(data) {
+      success: function(data)
+      {
         _this.arr = eval(data)
 
       }
@@ -713,7 +728,9 @@ a {
 
 .img {
   width: 100%;
-  height: 80%;
+  height:80%;
+  display: flex;
+  align-items: flex-end;
 }
 
 #list {
@@ -746,8 +763,9 @@ input:-ms-input-placeholder {
 }
 
 .img img {
-  width: 100%;
-  height: 100%;
+  width: 96%;
+  height: 98%;
+  margin-left: 1%;
 }
 
 /*header的样式*/
@@ -844,7 +862,7 @@ input:-ms-input-placeholder {
 
 .container-t {
   width: 100%;
-  height: 80px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -885,6 +903,7 @@ input:-ms-input-placeholder {
   margin-bottom: 15%;
   background: url(../assets/images/ps/背景粉@2x.png) no-repeat center center;
   background-size: 100% 100%;
+  overflow: scroll;
 }
 
 .scroll {
@@ -920,7 +939,6 @@ input:-ms-input-placeholder {
   color: #000000;
   font-size: 30px;
   text-align: center;
-  line-height: 65px;
 }
 
 .container .con ol {
@@ -931,7 +949,7 @@ input:-ms-input-placeholder {
 
 .container .con ol li {
   width: 328px;
-  height: 328px;
+  height: 358px;
   margin-top: 20px;
   background: url(../assets/images/ps/商品背景@2x.png) no-repeat 0px 0px;
   background-size: 100% 100%;
@@ -940,19 +958,19 @@ input:-ms-input-placeholder {
 }
 
 .con .price {
-  position: absolute;
+  /* position: absolute; */
   top: 60%;
   left: 10%;
   color: red;
 }
 
 .con .price span {
-  font-size: 64px;
+  font-size:32px;
 }
 
 .zhez {
   width: 100%;
-  height: 100%;
+  height:100%;
   display: flex;
   align-items: center;
   position: absolute;

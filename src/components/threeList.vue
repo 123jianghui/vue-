@@ -1,64 +1,79 @@
 <template>
-	<div id="riceList">
+	<div id="threeList">
 		<div class="container">
-			<div class="header" style="display:none">
-				<div class="ss">
-					<input type="text" placeholder="请输入商品名称" @input="search()" />
-				</div>
-				<p>设备：天河一号</p>
-				<div class="nav">
-					<div class="swiper-container">
-						<div class="swiper-wrapper" @touchstart="touchStart()" @touchmove="touchMove()" @touchend="touchEnd()">
-							<div class="swiper-slide">
-								<ul style="flex-wrap: wrap;">
-									<li v-for="(list , index) in arr" :id="list.id">
-										<router-link :to="{path:'/'+list}" @click.native="routerTo(index)">{{list.name}}</router-link>
-									</li>
-								</ul>
+			<div class="container2">
+					<div class="header" style="display:none">
+						<div class="ss">
+							<input type="text" placeholder="请输入商品名称" @input="search()" />
+						</div>
+						<p>设备：天河一号</p>
+						<div class="nav">
+							<div class="swiper-container">
+								<div class="swiper-wrapper" @touchstart="touchStart()" @touchmove="touchMove()" @touchend="touchEnd()">
+									<div class="swiper-slide">
+										<ul style="flex-wrap: wrap;">
+											<li v-for="(list , index) in arr" :id="list.id">
+												<router-link :to="{path:'/'+list}" @click.native="routerTo(index)">{{list.name}}</router-link>
+											</li>
+											<!-- <li>优质水果</li>
+											<li>坚果类</li>
+											<li>零食类</li>
+											<li>饮料类</li> -->
+										</ul>
+									</div>
+									<div class="swiper-slide">
+										<ul style="flex-wrap: wrap;">
+											<li v-for="(list , index) in arr" :id="list.id">
+												<router-link :to="{path:'/'+list}" @click.native="routerTo(index)">{{list.name}}</router-link>
+											</li>
+											<!-- <li>优质水果</li>
+											<li>坚果类</li>
+											<li>零食类</li>
+											<li>饮料类</li> -->
+										</ul>
+									</div>
+									<div class="swiper-slide">
+										<ul style="flex-wrap: wrap;">
+											<li v-for="(list , index) in arr" :id="list.id">
+												<router-link :to="{path:'/'+list}" @click.native="routerTo(index)">{{list.name}}</router-link>
+											</li>
+											<!-- <li>优质水果</li>
+											<li>坚果类</li>
+											<li>零食类</li>
+											<li>饮料类</li> -->
+										</ul>
+									</div>
 							</div>
-							<div class="swiper-slide">
-								<ul style="flex-wrap: wrap;">
-									<li v-for="(list , index) in arr" :id="list.id">
-										<router-link :to="{path:'/'+list}" @click.native="routerTo(index)">{{list.name}}</router-link>
-									</li>
-								</ul>
-							</div>
-							<div class="swiper-slide">
-								<ul style="flex-wrap: wrap;">
-									<li v-for="(list , index) in arr" :id="list.id">
-										<router-link :to="{path:'/'+list}" @click.native="routerTo(index)">{{list.name}}</router-link>
-									</li>
-								</ul>
-							</div>
+
+						</div>
+						<div class="pagation1">
+							<div class="on" @click="move1()"></div>
+							<div @click="move2()"></div>
+							<div @click="move3()"></div>
+						</div>
+						<div class="fix">预定商品</div>
 					</div>
-
 				</div>
-				<div class="pagation1">
-					<div class="on" @click="move1()"></div>
-					<div @click="move2()"></div>
-					<div @click="move3()"></div>
-				</div>
-				<div class="fix">预定商品</div>
-			</div>
-		</div>
-			<div class="container2 wrapper"  @touchstart="touchStart2()" @touchmove="touchMove2()" @touchend="touchEnd2()">
-
-				<div class="container-t">
+				<div class="container-t wrapper" @touchstart="touchStart2()" @touchmove="touchMove2()" @touchend="touchEnd2()">
 						<div class="l">
 							<!--<img src="../assets/images/ps/宁夏优品@2x.gif" />-->
 						</div>
 						<div class="m">
 							<img src="../assets/images/ps/下拉@2x.png" @click="show()" />
 						</div>
+						<!--<div class="r">
+
+			</div>-->
 						<router-link class="r" tag="div" to="/history">
 							<img src="../assets/images/ps/个人中心-@2x.png" />
 						</router-link>
 					</div>
 				<ul class="con">
-					<!--<li v-for="(list , index) in data">
+					<li v-for="(list , index) in data">
 						<div>
 							<p class="price">￥{{list.price}}</p>
 							<img :src="list.img" />
+							<!-- <p class="name">{{list.name}}</p> -->
 							<router-link tag="li" :to="{ name: 'detail'}" @click.native="idBtn(index)" class="name">{{list.name}}</router-link>
 						</div>
 						<div class="box">
@@ -69,31 +84,13 @@
 								<img src="../assets/images/ps/加-@2x.png" />
 							</div>
 						</div>
-					</li>-->
-					<li v-for="(list , index) in data">
-						<div>
-							<div class="img">
-								<img :src="list.img" />
-							</div>
-							<router-link tag="div" :to="{ name: 'detail'}" @click.native="idBtn(index)" class="name">
-								<p class="price" style="display: inline-block;width: 50%;">￥{{list.price}}</p>
-								<p style="display: inline-block;width: 50%;">{{list.name}}</p>
-							</router-link>
-						</div>
-						<div class="box">
-							<div class="del" @click="del(index)">
-								<img src="../assets/images/ps/mobile/减@2x.png" />
-							</div>
-							<div class="add" @click="add(index)">
-								<img src="../assets/images/ps/加-@2x.png" />
-							</div>
-						</div>
 					</li>
-					<!--<li>
+					<!-- <router-link class="name" tag="li" :to="{name:'detail'}" @click.native="idBtn(index)" v-for="(list , index) in data">
 						<div>
-							<p class="price">￥22.5</p>
-							<img src="../../../myscroll/build/logo.png"/>
-							<router-link tag="div" :to="{ name: 'detail'}" @click.native="idBtn(index)" class="name">苹果</router-link>
+							<p class="price">￥{{list.price}}</p>
+							<img :src="list.img" />
+							<p class="name">{{list.name}}</p>
+							<p class="span1">返古归真番茄 约1.25kg</p>
 						</div>
 						<div class="box">
 							<div class="del" @click="del(index)">
@@ -103,7 +100,8 @@
 								<img src="../assets/images/ps/加-@2x.png" />
 							</div>
 						</div>
-					</li>-->
+					</router-link> -->
+
 				</ul>
 			</div>
 		</div>
@@ -140,12 +138,10 @@ function stopPro (evt) {
 		e.cancelBubble=true;//IE阻止冒泡方法
 	}
 }
-var  i = 0;
-var productTypeId = ""
 	import url from '../components/url'
 
 	export default {
-		name: 'riceList',
+		name: 'threeList',
 		data() {
 			return {
 				bool: false,
@@ -176,7 +172,6 @@ var productTypeId = ""
 
 				this.index2 = index
 				productTypeId = $(".swiper-slide ul li").eq(index).attr('id')
-				sessionStorage.setItem("productTypeId",productTypeId)
 				if(this.index2 == 0) {
 					this.$router.push({
 						path: "/lingshiList"
@@ -209,7 +204,7 @@ var productTypeId = ""
 						//						$(".con ol").empty();
 
 						_this.data = eval(data)
-						// console.log(_this.data)
+						console.log(_this.data)
 
 					}
 				});
@@ -228,17 +223,17 @@ var productTypeId = ""
 					async: true,
 					success: function(data) {
 						data = JSON.parse(data)
-						console.log(data)
+
 						if(data.data == "SUCCESS") {
 
-							let num = $(".shoppingCar p").html();
+							let num = $(".position .num").html();
 							num--;
-							$(".shoppingCar p").html(num)
-							let total = Number($(".txt .price").html());
+							$(".position .num").html(num)
+							let total = Number($(".footer .l span").html());
 							total -= Number(_this.data[index].price);
 							total = total.toFixed(2)
-							$(".txt .price").html(total)
-							// console.log($(".footer .l span").html(total))
+							$(".footer .l span").html(total)
+							console.log($(".footer .l span").html(total))
 
 						} else {
 							console.log(111)
@@ -262,14 +257,14 @@ var productTypeId = ""
 						data = JSON.parse(data)
 
 						if(data.data == "SUCCESS") {
-							let num = $(".shoppingCar p").html();
+							let num = $(".position .num").html();
 							num++;
-							$(".shoppingCar p").html(num)
-							let total = Number($(".txt .price").html());
+							$(".position .num").html(num)
+							let total = Number($(".footer .l span").html());
 							total += Number(_this.data[index].price);
 							total = total.toFixed(2)
-							$(".txt .price").html(total)
-							// console.log($(".footer .l span").html(total))
+							$(".footer .l span").html(total.toFixed(2))
+							console.log($(".footer .l span").html(total))
 
 						} else {
 							console.log(data.message)
@@ -409,9 +404,8 @@ var productTypeId = ""
 						});
 					}
 					productTypeId = $(".swiper-slide ul li").eq(this.index2).attr('id')
-					sessionStorage.setItem("productTypeId",productTypeId)
-					// console.log(productTypeId)
-					// console.log("向左滑动")
+					console.log(productTypeId)
+					console.log("向左滑动")
 
 					var _this = this;
 					$.ajax({
@@ -426,7 +420,7 @@ var productTypeId = ""
 							//						$(".con ol").empty();
 
 							_this.data = eval(data)
-							// console.log(_this.data)
+							console.log(_this.data)
 
 						}
 					});
@@ -455,9 +449,8 @@ var productTypeId = ""
 						});
 					}
 					productTypeId = $(".swiper-slide ul li").eq(this.index2).attr('id')
-					sessionStorage.setItem("productTypeId",productTypeId)
-					// console.log(productTypeId)
-					// console.log("向右滑动")
+					console.log(productTypeId)
+					console.log("向右滑动")
 					var _this = this;
 					$.ajax({
 						type: "post",
@@ -471,7 +464,7 @@ var productTypeId = ""
 							//						$(".con ol").empty();
 
 							_this.data = eval(data)
-							// console.log(_this.data)
+							console.log(_this.data)
 
 						}
 					});
@@ -482,13 +475,12 @@ var productTypeId = ""
 			let _this = this;
 			var total = 0;
 			//获取商品信息
-			productTypeId = sessionStorage.getItem("productTypeId")
 			$.ajax({
 					type: 'post',
 					url: url.indexUrl,
 					data: {
 						'rows': 0,
-						"productTypeId": productTypeId
+						"productTypeId": ""
 					},
 					success: function(data) {
 						_this.data = eval(data)
@@ -509,8 +501,8 @@ var productTypeId = ""
 							num += Number(data[i].quantity)
 							total += Number(data[i].quantity) * Number(data[i].price)
 						}
-						$(".shoppingCar p").html(num);
-						$(".txt .price").html(total.toFixed(2))
+						$(".position .num").html(num);
+						$(".footer .l span").html(total.toFixed(2))
 					}
 				});
 			//获取商品类型标签
@@ -558,7 +550,7 @@ var productTypeId = ""
 		margin-left: 85%;
 	}
 
-	#riceList {
+	#shopping {
 		width: 100%;
 		height: 100%;
 	}
@@ -604,11 +596,9 @@ var productTypeId = ""
 
 	.img {
 		width: 100%;
-		height:320px;
+		height: 80%;
 	}
-    .img img{
-    	width: 60%;
-    }
+
 	#list {
 		width: 100%;
 		height: 100%;
@@ -636,6 +626,11 @@ var productTypeId = ""
 		/* Internet Explorer 10+ */
 		color: #999;
 		font-size: 28px;
+	}
+
+	.img img {
+		width: 100%;
+		height: 100%;
 	}
 	/*header的样式*/
 
@@ -741,7 +736,7 @@ var productTypeId = ""
 
 	.container {
 		width: 100%;
-		height:-webkit-fill-available;
+		height: 100%;
 		background: url(../assets/images/ps/渐变背景@2x.png) no-repeat 0px 0px;
 		background-size: 100% 100%;
 		overflow: auto;
@@ -750,7 +745,6 @@ var productTypeId = ""
 
 	.container2 {
 		width:100%;
-		height:inherit;
 		background: url(../assets/images/ps/背景白色@2x.png) no-repeat 12px 45px;
 		background-size: 100% 100%;
 		padding-bottom: 2%;
@@ -814,26 +808,29 @@ var productTypeId = ""
 	.container2 .con div {
 		width: 100%;
 		position: relative;
-		text-align: center;
 	}
 
 	.container2 .con div img {
-		width:90%;
+		width: 100%;
 	}
 
 	.container2 .con div .price {
 		width: 32%;
+		position: absolute;
+		padding-left: 68%;
+		margin-top: 10%;
 		font-size: 28px;
 		color: #FF9800;
 	}
 
 	.container2 .con div .name {
 		width: 100%;
+		position: absolute;
 		text-align: center;
+		margin-top: -35%;
 		font-weight: bold;
 		font-size: 28px;
 		color: #000;
-		display: flex;
 	}
 
 	.container2 .con div .span1 {
@@ -847,11 +844,9 @@ var productTypeId = ""
 
 	.container2 .con li {
 		width: 328px;
-		height: 390px;
+		height: 328px;
 		margin-top: 4%;
 		margin-bottom: 6%;
-		background: url(../assets/images/ps/mobile/商品背景@3x.png) no-repeat 100% 100%;
-		background-size: 100% 100%;
 	}
 
 	.container2 .con li .box {

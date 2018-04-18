@@ -2,7 +2,7 @@
 </template>
 
 <script>
-	const baseUrl="localhost:8080"
+//	const baseUrl="http://gxcs.iq234.com"
 	//判断是否注册
 	const isregist="../usersController.do?fronttz"
 	//获取商品列表
@@ -37,7 +37,8 @@
 	const historyUrl="../ordersController.do?userOrdersGetData"
 	//下订单
 	const createOrder="../testController.do?createOrder"
-	
+	 //支付
+	 const payUrl="../testController.do?create"
 	export default{
 		isregist,
 		indexUrl,

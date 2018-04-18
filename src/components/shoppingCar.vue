@@ -1,13 +1,11 @@
 <template>
 	<div class="shoppingCar">
 		<div class="container">
-			<ul style="margin-bottom: 30%;">
+			<ul style="margin-bottom: 19%;">
 				<li v-for="(list,index) in data" :id="list.id">
 					<!--<p class="title">菲农旗舰店</p>-->
 					<div class="content">
 						<div class="l">
-							<!--<img src="../assets/images/shopping/check.png" v-if="bool2" @click="toggle(index)"/>
-							<img src="../assets/images/shopping/checked.png" v-if="bool1" @click="toggle(index)"/>-->
 							<input type="checkbox" class="check" name="" value="" @click="check(index)" />
 						</div>
 						<div class="m">
@@ -66,7 +64,7 @@
 		name: 'shoppingCar',
 		data() {
 			return {
-			/*	num: 0,*/
+				/*	num: 0,*/
 				data: {
 
 				},
@@ -80,7 +78,8 @@
 				if(this.bool1 || this.bool2) {
 					var num = parseInt($("li input").eq(index).val())
 					var price = parseInt($(".price").eq(index).html())
-					console.log(num * price)
+					// console.log(num * price)
+
 				}
 			},
 			del: function(index) {
@@ -93,7 +92,7 @@
 			delData: function() {
 				var productid = this.product_id
 				var num = this.num
-				console.log(this.product_id)
+				// console.log(this.product_id)
 				$(".box").css('display', 'none')
 				$.ajax({
 					type: "post",
@@ -110,12 +109,25 @@
 			reduce: function(index) {
 				var productid = $(".container ul li").eq(index).attr('id');
 				var num = parseInt($(".m input").eq(index).val())
-//				var _this = this;
+				//				var _this = this;
 				var inp = $(".check").length;
-				num--;
-				if(num<=0){
-					num =1 ;
-				}
+				$.ajax({
+					type: "post",
+					url: url.reduceUrl,
+					async: true,
+					data: {
+						"productid": productid
+					},
+					success: function(data) {
+						data = JSON.parse(data)
+
+						if(data.data == "SUCCESS") {
+							num--;
+							$(".m input").eq(index).val(num)
+
+						}
+					}
+				});
 				var totals = 0;
 				$(".m input").eq(index).val(num)
 				for(let i = 0; i < inp; i++) {
@@ -132,20 +144,20 @@
 							async: true,
 							success: function(data) {
 								//data = JSON.parse(data)
-//								data="SUCCESS"
-//								if(data == "SUCCESS") {
-									$(".m input").eq(index).val(num)
-									var totalNum = Number($(".num").eq(i).find(".price").html()) * Number($(".num").eq(i).find("input").val());
-									console.log(totalNum)
-									totals += totalNum;
-									console.log(totals)
-									$(".total_price").html(totals.toFixed(2))
-									
-									total = totals
-									
-//								} else {
-//									console.log("err")
-//								}
+								//								data="SUCCESS"
+								//								if(data == "SUCCESS") {
+								$(".m input").eq(index).val(num)
+								var totalNum = Number($(".num").eq(i).find(".price").html()) * Number($(".num").eq(i).find("input").val());
+								// console.log(totalNum)
+								totals += totalNum;
+								// console.log(totals)
+								$(".total_price").html(totals.toFixed(2))
+
+								total = totals
+
+								//								} else {
+								//									console.log("err")
+								//								}
 
 							}
 						});
@@ -155,50 +167,29 @@
 
 			},
 			add: function(index) {
-//				var productid = $(".container ul li").eq(index).attr('id')
-//				var _this = this
-//				$.ajax({
-//					type: "post",
-//					url: url.addUrl,
-//					data: {
-//						"productid": productid
-//					},
-//					success: function(data) {
-//						console.log(data)
-//						data = JSON.parse(data)
-//
-//						if(data.data == "SUCCESS") {
-//							var num = parseInt($(".m input").eq(index).val())
-//							num++;
-//							$(".m input").eq(index).val(num)
-//
-//						} else {
-//							console.log(err)
-//						}
-//					}
-//				})
-//				this.total = 0;
-//				var inp = $(".check").length;
-//
-//				for(let i = 0; i < inp; i++) {
-//					flag = $(".l input").eq(i).prop("checked")
-//
-//					if(flag) {
-//						this.total += $(".num").eq(i).find(".price").html() * $(".num").eq(i).find("input").val();
-//
-//					}
-//				}
-//				this.total += Number($(".num").eq(index).find(".price").html())
-//				$(".total_price").html(this.total.toFixed(2))
-//				total = this.total
-
 				var productid = $(".container ul li").eq(index).attr('id');
 				var num = parseInt($(".m input").eq(index).val())
-//				var _this = this;
+				//				var _this = this;
 				var inp = $(".check").length;
-				num++;
+				$.ajax({
+					type: "post",
+					url: url.addUrl,
+					async: true,
+					data: {
+						"productid": productid
+					},
+					success: function(data) {
+						data = JSON.parse(data)
+
+						if(data.data == "SUCCESS") {
+							num++;
+							$(".m input").eq(index).val(num)
+
+						}
+					}
+				});
 				var totals = 0;
-				$(".m input").eq(index).val(num)
+
 				for(let i = 0; i < inp; i++) {
 					//获取所有复选框是否为选中状态
 					flag = $(".l input").eq(i).prop("checked")
@@ -213,18 +204,18 @@
 							async: true,
 							success: function(data) {
 								data = JSON.parse(data)
-								console.log(data)
+								// console.log(data)
 								//console.log(data)
 								if(data.data == "SUCCESS") {
 									$(".m input").eq(index).val(num)
 									var totalNum = Number($(".num").eq(i).find(".price").html()) * Number($(".num").eq(i).find("input").val());
-									console.log(totalNum)
+									// console.log(totalNum)
 									totals += totalNum;
-									console.log(totals)
+									// console.log(totals)
 									$(".total_price").html(totals.toFixed(2))
-									
+
 									total = totals
-									
+
 								} else {
 									console.log("err")
 								}
@@ -242,10 +233,10 @@
 			check: function(index) {
 				//				var inp = $("ul li").length;
 				//				var flag = $(".l input").prop("checked")
-				//			
+				//
 				//				total = $(".num").eq(index).find(".price").html()*$(".num").eq(index).find("input").val();
 				//
-				//				$(".total_price").html(total)	
+				//				$(".total_price").html(total)
 				this.total = 0;
 				var inp = $("ul li").length;
 
@@ -284,7 +275,7 @@
 				//生成订单
 				$.ajax({
 					type: "post",
-					url: url.createOrder,
+					url: "http://gxcs.iq234.com/testController.do?createOrder",
 					dataType: "json",
 					data: {
 						"productids": productids,
@@ -300,8 +291,8 @@
 							var appId;
 							$.ajax({
 								type: "post",
-								url: "http://dc.iq234.com/nomanshop/testController.do?create",
-//								url: "http://127.0.0.1/nomanshop/testController.do?create",
+								url: "http://gxcs.iq234.com/testController.do?create",
+								//								url: "http://127.0.0.1/nomanshop/testController.do?create",
 								data: {
 									"ordersIds": data.data.ordersIds,
 									"ordersAllMoney": data.data.ordersAllMoney
@@ -328,11 +319,13 @@
 													paySign: sign //微信签名
 												},
 												function(res) {
-
+													// console.log(res.err_msg);
 													if(res.err_msg == "get_brand_wcpay_request:ok") {
-														window.location.href = "http://dc.iq234.com/nomanshop/dist/index.html#/history";
+														window.location.href = "http://gxcs.iq234.com/dist/index.html#/history";
 													} // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-													else {}
+													else {
+
+													}
 												}
 											);
 										}
@@ -381,30 +374,32 @@
 		margin: 0;
 		list-style: none;
 	}
-	
+
 	html,
 	body {
 		width: 100%;
 		height: 100%;
 	}
-	
+
 	.shoppingCar {
 		width: 100%;
 		height: 100%;
 	}
-	
+
 	.container {
 		width: 100%;
 		height: -webkit-fill-available;
+	}
+
+	ul {
+		width: 94%;
+		height: -webkit-fill-available;
+		overflow: scroll;
+		padding: 4% 3% 0%;
 		background: url(../assets/images/shopping/圆角矩形2@2x.png) no-repeat 0px 0px;
 		background-size: 100% 100%;
 	}
-	
-	ul {
-		width: 94%;
-		padding: 4% 3% 0%;
-	}
-	
+
 	ul li {
 		width: 96%;
 		padding: 3% 2%;
@@ -413,14 +408,14 @@
 		background-size: 100% 100%;
 		margin-bottom: 4%;
 	}
-	
+
 	ul li .title {
 		width: 100%;
 		font-size: 30px;
 		font-family: "黑体";
 		color: #333333;
 	}
-	
+
 	.content {
 		width: 100%;
 		background: url(../assets/images/shopping/xiaobeijing@2x.png) no-repeat 0px 0px;
@@ -431,36 +426,36 @@
 		align-items: center;
 		justify-content: space-around;
 	}
-	
+
 	.content .l {
 		width: 15%;
 		text-align: center;
 	}
-	
+
 	.content .m {
 		width: 70%;
 		height: 100%;
 	}
-	
+
 	.content .r {
 		width: 15%;
 	}
-	
+
 	.content .l img {
 		width: 40px;
 		height: 40px;
 	}
-	
+
 	.content .r img {
 		width: 100%;
 	}
-	
+
 	.content .m {
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
 	}
-	
+
 	.content .m .name {
 		font-size: 28px;
 		font-family: "黑体";
@@ -468,32 +463,32 @@
 		margin-bottom: 6%;
 		font-weight: lighter;
 	}
-	
+
 	.content .m div:nth-child(1) {
 		width: 40%;
 	}
-	
+
 	.content .m div img {
 		width: 80%;
 	}
-	
+
 	.content .m div:nth-child(2) {
 		font-size: 24px;
 		color: #CCCCCC;
 		font-family: "黑体";
 	}
-	
+
 	.content .m .num span {
 		color: #fb4c41;
 	}
-	
+
 	.content .m .num input {
 		width: 20%;
 		text-align: center;
 		border: 2px solid #ccc;
 		height: 31px;
 	}
-	
+
 	.content .m .num .add {
 		width: 10%;
 		background: #fff;
@@ -501,7 +496,7 @@
 		border-left: 0;
 		height: 35px;
 	}
-	
+
 	.content .m .num .del {
 		width: 10%;
 		background: #fff;
@@ -509,7 +504,7 @@
 		border-right: 0;
 		height: 35px;
 	}
-	
+
 	.bottom {
 		width: 94%;
 		display: flex;
@@ -519,29 +514,29 @@
 		position: fixed;
 		bottom: 0;
 	}
-	
+
 	.bottom div {
 		width: 50%;
 	}
-	
+
 	.bottom p {
 		color: #fff;
 		font-size: 30px;
 		font-family: "黑体";
 	}
-	
+
 	.bottom span {
 		color: yellow;
 	}
-	
+
 	.bottom div:nth-child(2) {
 		text-align: right;
 	}
-	
+
 	.bottom img {
 		width: 60%;
 	}
-	
+
 	.box {
 		width: 100%;
 		height: 100%;
@@ -551,7 +546,7 @@
 		display: none;
 		background: rgba(0, 0, 0, 0.4);
 	}
-	
+
 	.box div {
 		width: 450px;
 		padding: 8% 0;
@@ -561,18 +556,18 @@
 		text-align: center;
 		font-size: 30px;
 	}
-	
+
 	.box div p {
 		margin-bottom: 5%;
 	}
-	
+
 	.box button {
 		width: 30%;
 		padding: 2% 0;
 		background: deepskyblue;
 		border: 0;
 	}
-	
+
 	.zhez {
 		width: 100%;
 		height: 100%;
@@ -582,7 +577,7 @@
 		top: 0;
 		left: 0;
 	}
-	
+
 	.zhez div {
 		width: 520px;
 		height: 215px;
@@ -593,11 +588,11 @@
 		font-size: 32px;
 		padding-top: 8%;
 	}
-	
+
 	.zhez label {
 		font-size: 36px;
 	}
-	
+
 	.btn_y,
 	.btn_n {
 		display: inline-block;
@@ -606,7 +601,7 @@
 		/*border: 1px solid #ccc;*/
 		line-height: 80px;
 	}
-	
+
 	.btn_y {
 		color: red;
 	}

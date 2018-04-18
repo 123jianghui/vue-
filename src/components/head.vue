@@ -34,12 +34,11 @@
 					success: function(data) {
 						data = JSON.parse(data);
 						if(data.message == "false") {
-
 							var openids = data.data.openids;
 							var facilityid = data.data.facilityid;
 							sessionStorage.setItem("openids", openids)
 							sessionStorage.setItem("facilityid", facilityid)
-							window.location.href = '/nomanshop/dist/index.html#/reg'
+							window.location.href = '/dist/index.html#/reg'
 						} else {
 							window.location.href = '/dist/index.html#/list'
 						}
@@ -57,7 +56,7 @@
 							var facilityid = data.data.facilityid;
 							sessionStorage.setItem("openids", openids)
 							sessionStorage.setItem("facilityid", facilityid)
-							window.location.href = '/nomanshop/dist/index.html#/reg'
+							window.location.href = '/dist/index.html#/reg'
 						} else {
 							window.location.href = '/dist/index.html#/list'
 						}
@@ -77,7 +76,7 @@
 							var facilityid = data.data.facilityid;
 							sessionStorage.setItem("openids", openids)
 							sessionStorage.setItem("facilityid", facilityid)
-							window.location.href = '/nomanshop/dist/index.html#/reg'
+							window.location.href = '/dist/index.html#/reg'
 						} else {
 							window.location.href = '/dist/index.html#/list'
 						}

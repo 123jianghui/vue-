@@ -83,12 +83,13 @@ export default {
           "facilityid": facilityid
         },
         success: function(data) {
-          console.log(data)
+          // console.log(data)
+
           data = JSON.parse(data)
           var respCode = Number(data.respCode)
           if (respCode == 200) {
-            console.log(respCode)
-            window.location.href = '/nomanshop/dist/index.html#/user'
+            // console.log(respCode)
+            window.location.href = '/dist/index.html#/user'
           } else {
             alert("验证码错误")
           }

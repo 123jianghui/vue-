@@ -123,9 +123,9 @@ export default {
     let _this = this;
     axios.post(url.indexUrl)
       .then(function(data) {
-        console.log(data.data.data)
+        // console.log(data.data.data)
         _this.data = data.data.data
-        console.log(_this.data)
+        // console.log(_this.data)
       })
   }
 }

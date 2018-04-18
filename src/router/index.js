@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import List from '@/components/list'
-import shopping from '@/components/shopping'
-import History from '@/components/history'
-import kefu from '@/components/kefu'
-import shensu from '@/components/shensu'
-import User from '@/components/user'
-import reg from '@/components/reg'
 import Url from '@/components/url'
-import Detail from '@/components/detail'
-import shoppingCar from '@/components/shoppingCar'
-import Head from '@/components/head'
-import lingshiList from '@/components/lingshiList'
-import fruitList from '@/components/fruitList'
-import riceList from '@/components/riceList'
-import milkList from '@/components/milkList'
+   import List from '@/components/list'
+   import shopping from '@/components/shopping'
+   import History from '@/components/history'
+   import kefu from '@/components/kefu'
+   import shensu from '@/components/shensu'
+   import User from '@/components/user'
+   import reg from '@/components/reg'
+   import Detail from '@/components/detail'
+   import shoppingCar from '@/components/shoppingCar'
+   import Head from '@/components/head'
+   import lingshiList from '@/components/lingshiList'
+   import fruitList from '@/components/fruitList'
+   import riceList from '@/components/riceList'
+   import milkList from '@/components/milkList'
 
 Vue.use(Router)
 
@@ -24,27 +24,27 @@ routes: [
     {
       path: '/list',
       name: 'list',
-      component: List,
+      component:List
     },
     {
       path: '/lingshiList',
       name: 'lingshiList',
-      component: lingshiList,
+      component:lingshiList
     },
     {
       path: '/fruitList',
       name: 'fruitList',
-      component:fruitList,
+      component:fruitList
     },
     {
       path: '/riceList',
       name: 'riceList',
-      component: riceList,
+      component:riceList
     },
     {
       path: '/milkList',
       name: 'milkList',
-      component:milkList,
+      component:milkList
     },
     {
     	path:'/shopping',
